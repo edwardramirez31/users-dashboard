@@ -20,7 +20,7 @@ export const App: FC = () => {
   const dispatch = useDispatch();
 
   const filteredData = useSelector(getFilteredData);
-  console.log(filteredData);
+
   useEffect(() => {
     // fetching data from API
     Promise.all([getImages(), getUsers(), getAccounts()]).then(

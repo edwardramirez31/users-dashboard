@@ -1,25 +1,19 @@
+import { OPTIONS } from './../components/Filters/Filters';
 import { Row } from 'src/components';
 
-export const filterByCountry = (value: string) => {
-  return (array: Row[]) =>
-    array.filter(row =>
-      row.country.toLowerCase().includes(value.toLowerCase())
-    );
-};
+export const filterByCountry =
+  (searchedValue: string) => (applySearchFilter: boolean) => (row: Row) =>
+    applySearchFilter &&
+    row.country.toLowerCase().includes(searchedValue.toLowerCase());
 
 export const filterByPosts = (values: string[]) => {
-  return (array: Row[]) =>
-    array.filter(row => {
-      const withoutPosts = values.find(filter => filter === 'Without posts');
-      const moreThanOneHundredPosts = values.find(
-        filter => filter === 'More than 100 posts'
-      );
+  return (row: Row) => {
+    return OPTIONS.map(({ title, checkCondition }) => {
+      const filterIsApplied = values.find(filter => filter === title);
 
-      return (
-        (withoutPosts && row.posts === 0) ||
-        (moreThanOneHundredPosts && row.posts > 100)
-      );
-    });
+      return filterIsApplied && checkCondition(row.posts);
+    }).includes(true);
+  };
 };
 
 export const sortByPayments = (value: 'asc' | 'desc') => {

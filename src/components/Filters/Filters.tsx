@@ -20,12 +20,14 @@ interface FiltersProps {
 
 // OR store can be global
 
-const OPTIONS = [
+export const OPTIONS = [
   {
     title: 'Without posts',
+    checkCondition: (numberOfPosts: number) => numberOfPosts === 0,
   },
   {
     title: 'More than 100 posts',
+    checkCondition: (numberOfPosts: number) => numberOfPosts > 100,
   },
 ];
 
