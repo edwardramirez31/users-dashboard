@@ -2,6 +2,9 @@ import { useState, FC } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 
 import styles from './Filters.module.scss';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSelectedFilters } from 'src/store/user';
+import { getSelectedFilters } from 'src/store/selectors';
 
 interface FiltersProps {
   store?: {};
@@ -27,20 +30,11 @@ const OPTIONS = [
 ];
 
 export const Filters: FC<FiltersProps> = props => {
-  const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
+  const selectedFilters = useSelector(getSelectedFilters);
+  const dispatch = useDispatch();
 
   const onChange = ({ title }) => {
-    console.log(title); // for debugging
-
-    let updatedFilters;
-
-    if (selectedFilter.find(filter => filter === title)) {
-      updatedFilters = selectedFilter.filter(filter => filter !== title);
-    } else {
-      updatedFilters = [...selectedFilter, title];
-    }
-
-    setSelectedFilter(updatedFilters);
+    dispatch(setSelectedFilters(title));
   };
 
   return (
@@ -54,11 +48,12 @@ export const Filters: FC<FiltersProps> = props => {
             onClick={() => onChange(option)}
           >
             <Checkbox
-              checked={!!selectedFilter.find(filter => filter === option.title)}
+              checked={
+                !!selectedFilters.find(filter => filter === option.title)
+              }
               value={option.title}
               size="small"
               color="primary"
-              onChange={() => onChange(option)}
             />{' '}
             {option.title}
           </li>

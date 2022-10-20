@@ -1,9 +1,12 @@
-import { useState, FC } from 'react';
+import { FC } from 'react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 
 import styles from './Search.module.scss';
+import { getSearchedValue } from 'src/store/selectors';
+import { setSearchedValue } from 'src/store/user';
+import { useSelector, useDispatch } from 'react-redux';
 
 interface SearchProps {
   store?: {};
@@ -20,11 +23,10 @@ interface SearchProps {
 // OR store can be global
 
 export const Search: FC<SearchProps> = props => {
-  const [searchedValue, setSearchedValue] = useState('');
-
-  const onChange = value => {
-    console.log(value); // for debugging
-    setSearchedValue(value);
+  const searchedValue = useSelector(getSearchedValue);
+  const dispatch = useDispatch();
+  const onChange = (value: string) => {
+    dispatch(setSearchedValue(value));
   };
 
   return (

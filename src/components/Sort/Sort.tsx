@@ -6,6 +6,8 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 import styles from './Sort.module.scss';
+import { setSortValue } from 'src/store/user';
+import { useDispatch } from 'react-redux';
 
 interface SortProps {
   store?: {};
@@ -22,8 +24,10 @@ interface SortProps {
 // OR store can be global
 
 export const Sort: FC<SortProps> = props => {
+  const dispatch = useDispatch();
+
   const handleChange = value => {
-    console.log(value); // for debugging
+    dispatch(setSortValue(value)); // for debugging
   };
 
   return (
