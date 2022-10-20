@@ -39,3 +39,9 @@ jobs:
           user_email: 'edal_ramirez@hotmail.com'
           github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
           repository: ${{ github.repository }}
+
+      - name: Release new version
+        run: npx semantic-release
+        env:
+          GH_TOKEN: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
+          HUSKY: 0
